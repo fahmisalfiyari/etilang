@@ -14,7 +14,7 @@ class ViolationController extends Controller
      */
     public function index()
     {
-        $items = Violation::paginate(10);
+        $items = Violation::orderBy('id', 'desc')->paginate(10);
 
         // return $items;
         return view('violations.index', ['items' => $items]);
@@ -27,7 +27,7 @@ class ViolationController extends Controller
      */
     public function create()
     {
-        return redirect('/violations');
+        return view('violations.create');
     }
 
     /**
@@ -38,7 +38,14 @@ class ViolationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $violation                              = new Violation();
+        $violation->violator_identity_number    = $request->violator_identity_number;
+        $violation->violator_name               = $request->violator_name;
+        $violation->officer_id                  = $request->user()->id;
+        $violation->status                      = 'NEW';
+        $violation->save();
+
+        return redirect()->route('violations.index');
     }
 
     /**
@@ -60,7 +67,8 @@ class ViolationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $violation = Violation::find($id);
+        return view('violations.edit', ['violation' => $violation]);
     }
 
     /**
@@ -72,7 +80,7 @@ class ViolationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        die('Berhasil di update');
     }
 
     /**

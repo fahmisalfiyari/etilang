@@ -24,7 +24,7 @@ Route::get('book/{id}', function ($id) {
 // name agar route bisa dinamis
 // Route::get('violations', 'ViolationController@index')->name('violations.index');
 
-Route::resource('violations', 'ViolationController');
+Route::resource('violations', 'ViolationController')->middleware('auth');
 
 Auth::routes();
 
