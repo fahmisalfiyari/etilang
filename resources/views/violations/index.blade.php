@@ -6,7 +6,14 @@
 		<div class="col">
 			<h3>Daftar Pelanggaran</h3>
 			<br/>
-			<a href="{{ route('violations.create') }}" class="btn btn-primary"><span class="fa fa-plus"> Tambah Pelanggaran</a>
+
+			@if(\Session::has('success'))
+				<div class="alert alert-success">
+					<p>{{ \Session::get('success') }}</p>
+				</div><br/>
+			@endif
+
+			<a href="{{ route('violations.create') }}" class="btn btn-primary"><span class="fa fa-plus"> Tambah Pelanggaran</a><br/><br/>
 
 			<!-- List Pelanggaran -->
 			<table class="table table-bordered table-striped">
@@ -25,8 +32,19 @@
 							<td>{{ $item->violator_name }}</td>
 							<td>{{ $item->violator_identity_number }}</td>
 							<td>
-								<a href="{{ route('violations.edit' , $item->id) }}" class="btn btn-info"><span class="fa fa-pencil"></span> Edit</a>
-								<a href="" class="btn btn-danger"><span class="fa fa-trash"></span>Delete</a>
+								<div class="btn-group" role="group">
+									<a href="{{ route('violations.edit' , $item->id) }}">
+										<button type="button" class="btn btn-info">
+											<span class="fa fa-pencil"></span> Edit
+										</button>
+									</a>
+									&nbsp; &nbsp;
+									<form action="{{ route('violations.destroy' , $item->id) }}" method="POST">
+										{{ csrf_field() }}
+										@method('DELETE')
+										<input type="submit" class="btn btn-danger" value="Delete"/>
+									</form>
+								</div>
 							</td>
 						</tr>
 					@endforeach

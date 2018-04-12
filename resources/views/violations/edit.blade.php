@@ -17,7 +17,7 @@
 						<label>Nama Pelanggar</label>
 						<input type="text" name="violator_name" class="form-control" value="{{ $violation->violator_name }}">
 					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" class="btn btn-primary">Update</button>
 				</form>
 			</div>
 		</div>

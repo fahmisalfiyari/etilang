@@ -45,7 +45,8 @@ class ViolationController extends Controller
         $violation->status                      = 'NEW';
         $violation->save();
 
-        return redirect()->route('violations.index');
+        return redirect()   ->route('violations.index')
+                            ->with('success', 'Pelanggaran Behasil Ditambahkan');
     }
 
     /**
@@ -80,7 +81,13 @@ class ViolationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        die('Berhasil di update');
+        $violation                              = Violation::find($id);
+        $violation->violator_identity_number    = $request->get('violator_identity_number');
+        $violation->violator_name               = $request->get('violator_name');
+        $violation->save(); 
+
+        return redirect()   ->route('violations.index')
+                            ->with('success', 'Informasi Pelanggaran Berhasil Dirubah');
     }
 
     /**
@@ -91,6 +98,10 @@ class ViolationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $violation = Violation::find($id);
+        $violation->delete();
+
+        return redirect()   ->route('violations.index')
+                            ->with('success', 'Pelanggaran Berhasil Dihapus');
     }
 }
