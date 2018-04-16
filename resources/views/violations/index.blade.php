@@ -7,9 +7,9 @@
 			<h3>Daftar Pelanggaran</h3>
 			<br/>
 
-			@if(\Session::has('success'))
+			@if(session()->has('success'))
 				<div class="alert alert-success">
-					<p>{{ \Session::get('success') }}</p>
+					<p>{{session()->get('success') }}</p>
 				</div><br/>
 			@endif
 
@@ -20,6 +20,7 @@
 				<thead>
 					<tr>
 						<th>Nomor Pelanggaran</th>
+						<th>Nama Petugas</th>
 						<th>Nama Pelanggar</th>
 						<th>Identitas Pelanggar</th>
 						<th>Aksi</th>
@@ -29,17 +30,18 @@
 					@foreach ($items as $item)
 						<tr>
 							<td>{{ $item->id }}</td>
+							<td>{{ $item->user->name }}</td>
 							<td>{{ $item->violator_name }}</td>
 							<td>{{ $item->violator_identity_number }}</td>
 							<td>
 								<div class="btn-group" role="group">
-									<a href="{{ route('violations.edit' , $item->id) }}">
+									<a href="{{ route('violations.edit' , $item) }}">
 										<button type="button" class="btn btn-info">
 											<span class="fa fa-pencil"></span> Edit
 										</button>
 									</a>
 									&nbsp; &nbsp;
-									<form action="{{ route('violations.destroy' , $item->id) }}" method="POST">
+									<form action="{{ route('violations.destroy' , $item) }}" method="POST">
 										{{ csrf_field() }}
 										@method('DELETE')
 										<input type="submit" class="btn btn-danger" value="Delete"/>

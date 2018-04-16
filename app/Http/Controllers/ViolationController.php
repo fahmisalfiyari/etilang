@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Violation;
+use Auth;
 use Illuminate\Http\Request;
 
 class ViolationController extends Controller
@@ -12,9 +13,16 @@ class ViolationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Violation::orderBy('id', 'desc')->paginate(10);
+        // $items = Violation::orderBy('id', 'desc')->paginate(10);
+
+        // Menampilkan data dengan officer id yg sedang login
+        // $items = Violation::where('officer_id',Auth::id())->paginate(10);
+
+        // Jika memakai relationship
+        // $items = Auth::user()->violations()->paginate(10);
+        $items = $request->user()->violations()->paginate(10);
 
         // return $items;
         return view('violations.index', ['items' => $items]);
@@ -66,10 +74,18 @@ class ViolationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, Violation $violation)
     {
-        $violation = Violation::find($id);
-        return view('violations.edit', ['violation' => $violation]);
+        // Memakai find, untuk mencari primary key        
+        // $violation = Violation::findOrFail($id);
+        if($request->user()->can('edit-violation',$violation)){
+            return view('violations.edit', ['violation' => $violation]);
+        }
+
+            abort(404);
+         
+
+
     }
 
     /**
@@ -79,9 +95,10 @@ class ViolationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Violation $violation)
     {
-        $violation                              = Violation::find($id);
+
+        // $violation                              = Violation::findOrFail($id);
         $violation->violator_identity_number    = $request->get('violator_identity_number');
         $violation->violator_name               = $request->get('violator_name');
         $violation->save(); 
@@ -96,9 +113,9 @@ class ViolationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Violation $violation)
     {
-        $violation = Violation::find($id);
+        // $violation = Violation::find($id);
         $violation->delete();
 
         return redirect()   ->route('violations.index')
