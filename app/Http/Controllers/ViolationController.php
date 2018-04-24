@@ -49,8 +49,16 @@ class ViolationController extends Controller
         $violation                              = new Violation();
         $violation->violator_identity_number    = $request->violator_identity_number;
         $violation->violator_name               = $request->violator_name;
-        $violation->officer_id                  = $request->user()->id;
+        // $violation->officer_id                  = $request->user()->id;
         $violation->status                      = 'NEW';
+
+        //Eloquent Way
+        $user = $request->user();
+        // $violation->user()->associate($user);
+
+        //atau
+        $user->violations()->save($violation);
+
         $violation->save();
 
         return redirect()   ->route('violations.index')

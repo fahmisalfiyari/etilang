@@ -25,6 +25,10 @@ class ViolationsSeeder extends Seeder
         //     'status' => 'NEW',
         // ]);
 
-        factory(App\Violation::class, 50)->create();
+        // factory(App\Violation::class, 50)->create();
+
+        // factory(App\User::class, 10)->create()->each(function ($u) {
+        //     $u->violations()->save(factory(App\Violation::class)->make());
+        // });
     }
 }
