@@ -16,6 +16,14 @@
 						<label>Nama Pelanggar</label>
 						<input type="text" name="violator_name" class="form-control">
 					</div>
+					<div class="form-group">
+						<label>Lokasi Pos Laporan</label>
+						<select class="form-control" name="station_id">
+							@foreach (auth()->user()->stations as $station)
+								<option value="{{ $station->id }}" >{{ $station->address }}</option>
+							@endforeach
+						</select>
+					</div>
 					<button type="submit" class="btn btn-primary">Submit</button>
 				</form>
 			</div>

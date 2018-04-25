@@ -21,6 +21,7 @@
 					<tr>
 						<th>Nomor Pelanggaran</th>
 						<th>Nama Petugas</th>
+						<th>Lokasi Pos</th>
 						<th>Nama Pelanggar</th>
 						<th>Identitas Pelanggar</th>
 						<th>Aksi</th>
@@ -31,6 +32,7 @@
 						<tr>
 							<td>{{ $item->id }}</td>
 							<td>{{ $item->user->name }}</td>
+							<td>{{ $item->station->address }}</td>
 							<td>{{ $item->violator_name }}</td>
 							<td>{{ $item->violator_identity_number }}</td>
 							<td>

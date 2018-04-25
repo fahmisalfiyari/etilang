@@ -50,6 +50,7 @@ class ViolationController extends Controller
         $violation->violator_identity_number    = $request->violator_identity_number;
         $violation->violator_name               = $request->violator_name;
         // $violation->officer_id                  = $request->user()->id;
+        $violation->station_id                  = $request->station_id;
         $violation->status                      = 'NEW';
 
         //Eloquent Way
@@ -59,7 +60,7 @@ class ViolationController extends Controller
         //atau
         $user->violations()->save($violation);
 
-        $violation->save();
+        // $violation->save();
 
         return redirect()   ->route('violations.index')
                             ->with('success', 'Pelanggaran Behasil Ditambahkan');
@@ -89,11 +90,7 @@ class ViolationController extends Controller
         if($request->user()->can('edit-violation',$violation)){
             return view('violations.edit', ['violation' => $violation]);
         }
-
             abort(404);
-         
-
-
     }
 
     /**
@@ -109,6 +106,7 @@ class ViolationController extends Controller
         // $violation                              = Violation::findOrFail($id);
         $violation->violator_identity_number    = $request->get('violator_identity_number');
         $violation->violator_name               = $request->get('violator_name');
+        $violation->station_id                  = $request->get('station_id');
         $violation->save(); 
 
         return redirect()   ->route('violations.index')

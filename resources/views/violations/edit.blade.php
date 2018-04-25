@@ -17,6 +17,18 @@
 						<label>Nama Pelanggar</label>
 						<input type="text" name="violator_name" class="form-control" value="{{ $violation->violator_name }}">
 					</div>
+					<div class="form-group">
+						<label>Lokasi Pos Laporan</label>
+						<select class="form-control" name="station_id">
+							@foreach (auth()->user()->stations as $station)
+								@if(($station->id)==($violation->station_id))
+									<option selected="selected" value="{{ $station->id }}">{{ $station->address }}</option>
+								@else
+									<option value="{{ $station->id }}">{{ $station->address }}</option>
+								@endif	
+							@endforeach
+						</select>
+					</div>
 					<button type="submit" class="btn btn-primary">Update</button>
 				</form>
 			</div>
