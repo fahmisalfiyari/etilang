@@ -25,6 +25,7 @@ Route::get('book/{id}', function ($id) {
 // Route::get('violations', 'ViolationController@index')->name('violations.index');
 
 Route::resource('violations', 'ViolationController')->middleware('auth');
+Route::resource('stations', 'StationController')->middleware('auth');
 
 
 Auth::routes();

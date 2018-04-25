@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Station;
 
 class StationController extends Controller
 {
@@ -11,9 +12,18 @@ class StationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('stations.index');
+        $station_id = $request->get('station_id');
+        $station = Station::find($station_id);
+        
+        if ($station != null) {
+            $items = $station->violations()->paginate(10);
+        }else{
+            $items = "";
+        }
+
+        return view('stations.index', ['items' => $items]);
     }
 
     /**
