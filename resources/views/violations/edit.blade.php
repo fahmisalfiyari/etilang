@@ -11,7 +11,7 @@
 					@method('PUT')
 					<div class="form-group">
 						<label>Nomor Identitas Pelanggar</label>
-						<input type="text" name="violator_identity_number" class="form-control" value="{{ $violation->violator_identity_number }}">
+						<input type="text" name="violator_identity_number" class="form-control" value="{{ $violation->violator_identity_number }}" readonly="readonly">
 					</div>
 					<div class="form-group">
 						<label>Nama Pelanggar</label>

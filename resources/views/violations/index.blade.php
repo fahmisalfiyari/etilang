@@ -28,7 +28,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach ($items as $item)
+					@forelse ($items as $item)
 						<tr>
 							<td>{{ $item->id }}</td>
 							<td>{{ $item->user->name }}</td>
@@ -51,7 +51,11 @@
 								</div>
 							</td>
 						</tr>
-					@endforeach
+					@empty
+						<tr>
+							<td colspan="6">Belum ada data</td>
+						</tr>	
+					@endforelse
 				</tbody>
 			</table>
 

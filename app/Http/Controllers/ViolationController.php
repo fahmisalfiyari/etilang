@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Violation;
+use App\Events\ViolationCreated;
+use App\Http\Requests\ViolationStore;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -44,21 +46,25 @@ class ViolationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ViolationStore $request)
     {
         $violation                              = new Violation();
-        $violation->violator_identity_number    = $request->violator_identity_number;
-        $violation->violator_name               = $request->violator_name;
+        $violation->fill($request->all());
+        // $violation->violator_identity_number    = $request->violator_identity_number;
+        // $violation->violator_name               = $request->violator_name;
         // $violation->officer_id                  = $request->user()->id;
-        $violation->station_id                  = $request->station_id;
+        // $violation->station_id                  = $request->station_id;
         $violation->status                      = 'NEW';
 
+        $violation->station()->associate($request->station_id);
         //Eloquent Way
         $user = $request->user();
         // $violation->user()->associate($user);
 
         //atau
         $user->violations()->save($violation);
+
+        event(new ViolationCreated($violation));
 
         // $violation->save();
 
@@ -104,8 +110,9 @@ class ViolationController extends Controller
     {
 
         // $violation                              = Violation::findOrFail($id);
-        $violation->violator_identity_number    = $request->get('violator_identity_number');
-        $violation->violator_name               = $request->get('violator_name');
+        // $violation->violator_identity_number    = $request->get('violator_identity_number');
+        // $violation->violator_name               = $request->get('violator_name');
+        $violation->fill($request->except('violator_identity_number'));
         $violation->station_id                  = $request->get('station_id');
         $violation->save(); 
 

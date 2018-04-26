@@ -13,6 +13,6 @@ class Station extends Model
 
     public function violations()
     {
-    	return $this->hasMany(Violation::class, 'station_id');
+    	return $this->hasMany(Violation::class);
     }
 }

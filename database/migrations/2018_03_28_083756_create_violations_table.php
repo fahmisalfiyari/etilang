@@ -18,6 +18,7 @@ class CreateViolationsTable extends Migration
             $table->string('violator_identity_number');
             $table->string('violator_name');
             $table->integer('officer_id')->unsigned();
+            $table->integer('station_id')->unsigned();
             $table->string('status');
             $table->timestamps();
         });

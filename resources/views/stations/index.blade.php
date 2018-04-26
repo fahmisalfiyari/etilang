@@ -24,7 +24,7 @@
 	</form>
 	<br/>
 	<div class="row">
-		@if($items != null)
+		<!-- @if($items != null) -->
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
@@ -36,7 +36,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach ($items as $item)
+					@forelse ($items as $item)
 						<tr>
 							<td>{{ $item->id }}</td>
 							<td>{{ $item->user->name }}</td>
@@ -44,10 +44,15 @@
 							<td>{{ $item->violator_name }}</td>
 							<td>{{ $item->violator_identity_number }}</td>
 						</tr>
-					@endforeach
+					@empty
+						<tr>
+							<td colspan="5">Belum ada data</td>
+						</tr>
+					@endforelse
 				</tbody>
 			</table>
-		@endif
+			{!! $items->links() !!}
+		<!-- @endif -->
 	</div>
 </div>
 @endsection

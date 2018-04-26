@@ -5,7 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Violation extends Model
-{
+{	
+	protected $fillable = [
+		'violator_identity_number', 'violator_name'
+	];
+
     public function user()
     {
     	return $this->belongsTo(User::class,'officer_id');
@@ -13,6 +17,6 @@ class Violation extends Model
 
     public function station()
     {
-    	return $this->belongsTo(Station::class, 'station_id');
+    	return $this->belongsTo(Station::class);
     }
 }

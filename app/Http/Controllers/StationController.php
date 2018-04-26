@@ -15,6 +15,7 @@ class StationController extends Controller
     public function index(Request $request)
     {
         $station_id = $request->get('station_id');
+
         $station = Station::find($station_id);
         
         if ($station != null) {
