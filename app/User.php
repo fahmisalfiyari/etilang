@@ -36,4 +36,19 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Station::class, 'station_user');
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Peran::class, 'user_role');
+    }
+
+    public function hasRole($role){
+        $role = $this->roles()->where('role', $role)->first();
+
+        if (is_null($role)){
+            return false;
+        }
+
+        return true;
+    }
 }

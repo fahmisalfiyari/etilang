@@ -25,9 +25,15 @@ class UsersSeeder extends Seeder
             'password' => bcrypt('secret'),
         ]);
 
-        factory(App\User::class, 10)->create()->each(function ($u) {
-            $u->violations()->saveMany(factory(App\Violation::class)->times(5)->make());
-        });
+        App\User::insert([
+            'name' => 'Verifikator 1',
+            'email' => 'verifikator@gmail.com',
+            'password' => bcrypt('secret'),
+        ]);
+
+        // factory(App\User::class, 10)->create()->each(function ($u) {
+        //     $u->violations()->saveMany(factory(App\Violation::class)->times(5)->make());
+        // });
         // DB::table('users')->insert([
         //     'name' => 'Pelanggar 1',
         //     'email' => 'pelanggar1@gmail.com',
